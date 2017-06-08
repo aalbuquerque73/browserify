@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+    node:
+        build: docker
+        image: aalbuquerque/node
+        entrypoint: bash
+        command: ""
+        volumes:
+            - ./.git:/home/app/.git
+            - ./gears/:/home/app/gears/
+            - ./gulpfile.js:/home/app/gulpfile.js
+            - ./package.json:/home/app/package.json
