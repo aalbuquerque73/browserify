@@ -16,3 +16,7 @@ alias l='ls $LS_OPTIONS -lA'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+
+# node stuff
+cp /home/app/package2.json /home/app/package.json
+alias save='cat /home/app/package.json > /home/app/package2.json'

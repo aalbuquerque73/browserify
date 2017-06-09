@@ -8,4 +8,6 @@ WORKDIR /home/app
 
 COPY bashrc /root/.bashrc
 
+RUN npm install -g gulp
+
 CMD bash

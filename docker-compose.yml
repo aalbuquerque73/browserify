@@ -9,5 +9,12 @@ services:
         volumes:
             - ./.git:/home/app/.git
             - ./gears/:/home/app/gears/
-            - ./gulpfile.js:/home/app/gulpfile.js
-            - ./package.json:/home/app/package.json
+            - ./dist/:/home/app/dist/
+            - ./gulpfile.js:/home/app/gulpfile.babel.js
+            - ./package.json:/home/app/package2.json
+            - ./.babelrc:/home/app/.babelrc
+            - ./.eslintrc.js:/home/app/.eslintrc.js
+            - modules:/home/app/node_modules
+
+volumes:
+    modules:
