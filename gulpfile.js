@@ -21,7 +21,10 @@ function transform() {
             cb();
         },
         function (cb) {
-            const bundler = browserify({entries, debug, basedir, paths}).transform("babelify", {presets: ["es2015"]});
+            const bundler = browserify({entries, debug, basedir, paths})
+                .require(entries)
+                .transform('babelify', {presets: ['es2015']})
+                .transform('brfs');
             
             const bundle = bundler.bundle();
             cb(null, new gutil.File({
