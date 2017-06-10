@@ -11,6 +11,7 @@ services:
             - ./gears/:/home/app/gears/
             - ./dist/:/home/app/dist/
             - ./gulpfile.js:/home/app/gulpfile.babel.js
+            - ./html:/home/app/html
             - ./package.json:/home/app/package2.json
             - ./.babelrc:/home/app/.babelrc
             - ./.eslintrc.js:/home/app/.eslintrc.js
