@@ -2,10 +2,8 @@ version: "2"
 
 services:
     node:
-        build: docker
+        build: docker/node
         image: aalbuquerque/node
-        entrypoint: bash
-        command: ""
         volumes:
             - ./.git:/home/app/.git
             - ./gears/:/home/app/gears/
@@ -17,5 +15,21 @@ services:
             - ./.eslintrc.js:/home/app/.eslintrc.js
             - modules:/home/app/node_modules
 
+    server:
+        build: docker/server
+        image: aalbuquerque/server
+        ports:
+            - 8080:8080
+        volumes:
+            - ./docker/server/package.json:/home/app/package2.json
+            - ./docker/server/server.js:/home/app/server.js
+            - ./html:/home/app/public
+            - ./dist/:/home/app/dist/
+    
+    redis:
+        image: redis
+        ports:
+            - 6379:6379
+        
 volumes:
     modules:
