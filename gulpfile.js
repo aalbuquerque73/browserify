@@ -5,39 +5,35 @@ import gutil from 'gulp-util';
 
 import browserify from 'browserify';
 
+import module from './package.json';
+
 function transform() {
-    const stream = through.obj((file, encoding, cb) => {
-        const feature = JSON.parse(file.contents.toString(encoding));
-        
-        const bundler = browserify({
-            entries: [ feature.name ],
-            //debug: true,
-            basedir: 'gears',
-            paths: [ 'gears', 'node_modules', path.join(process.cwd(), 'gears') ]
-        }).transform("babelify", {presets: ["es2015"]});
-        
-        const data = [];
-        const bundle = bundler.bundle().on('error', function(err) { console.error(err); this.emit('end'); });
-        bundle.on('data', data.push.bind(data));
-        bundle.on('end', function() {
+    const entries = [],
+        debug = false,
+        basedir= 'gears',
+        paths = [ 'gears', 'node_modules', path.join(process.cwd(), 'gears') ];
+    
+    const stream = through.obj(
+        function (file, encoding, cb) {
+            const feature = JSON.parse(file.contents.toString(encoding));
+            
+            entries.push(feature.name);
+            cb();
+        },
+        function (cb) {
+            const bundler = browserify({entries, debug, basedir, paths}).transform("babelify", {presets: ["es2015"]});
+            
+            const bundle = bundler.bundle();
             cb(null, new gutil.File({
                 cwd: '',
                 base: '',
-                path: `${feature.name}-v${feature.version}.js`,
-                contents: Buffer.concat(data)
+                path: `${module.name}-v${module.version}.js`,
+                contents: bundle
             }));
-        });
-    });
-    return stream;
-}
-
-function log() {
-    const stream = through.obj((file, encoding, cb) => {
-        console.log('>', file.path);
-        console.log('>', file.contents.toString(encoding));
-        console.log('>', encoding);
-        cb(null, file);
-    });
+            bundle.on('error', cb);
+        }
+    );
+    
     return stream;
 }
 
