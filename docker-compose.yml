@@ -8,7 +8,7 @@ services:
             - ./.git:/home/app/.git
             - ./gears/:/home/app/gears/
             - ./dist/:/home/app/dist/
-            - ./gulpfile.js:/home/app/gulpfile.babel.js
+            - ./gulpfile.babel.js:/home/app/gulpfile.babel.js
             - ./html:/home/app/html
             - ./package.json:/home/app/package2.json
             - ./.babelrc:/home/app/.babelrc
@@ -25,11 +25,11 @@ services:
             - ./docker/server/server.js:/home/app/server.js
             - ./html:/home/app/public
             - ./dist/:/home/app/dist/
-    
+
     redis:
         image: redis
         ports:
             - 6379:6379
-        
+
 volumes:
     modules:
